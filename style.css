@@ -1,0 +1,48 @@
+.row {
+    display: block;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    font-size: 0;
+    align-items: center;
+    flex-direction: column;
+}
+img{
+    
+    width: 9vw;
+    max-width: 30px;
+}
+
+.selector, #menu {
+    display: flex;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.selector img{
+    margin: 3px;
+}
+
+.selected{
+    outline: 2px solid red;
+}
+
+.y5 {
+    /* margin-right: 2px; */
+    border-right: 2px solid black;
+}
+
+.x5 {
+    border-bottom: 2px solid black;
+}
+
+.y0 {
+    border-left: 2px solid black;
+}
+
+.x0 {
+    border-top: 2px solid black;
+}
