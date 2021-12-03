@@ -88,7 +88,7 @@ function changeImg() {
     history_arr[history_idx]=(to_history);
     history_idx++;
     //console.log("history_idx ++");
-    field[object_img.xcoor][object_img.ycoor]=change_to;
+    field[this.xcoor][this.ycoor]=change_to;
     //finally change src image
     this.src = "ng_"+change_to+".png";
 }
