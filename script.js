@@ -2,6 +2,7 @@
 const i_width = 8;
 const i_height = 5;
 
+let field=[]
 // container for storing whole grid
 const container = document.querySelector('.container');
 // history object
@@ -17,12 +18,15 @@ function createImgs(w, h) {
         //create row to store imgs in row
         row = document.createElement("div");
         row.class = "row";
-        
+        field.push([]);
         while (y < w) {
             //create img elem. and append to row
+            field[x].push(0);
             img = new Image();
             img.src = "ng_0.png";
             img.id= "x:" + x + " y:" + y;
+            img.xcoor=x;
+            img.ycoor=y;
             addStyling(img)
             img.addEventListener("click",changeImg)
             img.addEventListener("dragstart",changeImg)
@@ -35,6 +39,7 @@ function createImgs(w, h) {
         y = 0;
         x++;
     }
+    console.log(field);
     return document.querySelectorAll(".container img");
 }
 
@@ -73,7 +78,7 @@ function changeImg() {
         change_to = next;
         
     } else if(curr_selector==current_img){
-        return "no-action"
+        return "no-action";
         
     }else {
         change_to = curr_selector;
@@ -82,6 +87,8 @@ function changeImg() {
     to_history=[this,current_img];
     history_arr[history_idx]=(to_history);
     history_idx++;
+    //console.log("history_idx ++");
+    field[object_img.xcoor][object_img.ycoor]=change_to;
     //finally change src image
     this.src = "ng_"+change_to+".png";
 }
@@ -130,30 +137,67 @@ function historyChange(change_to){
     }
     if (change_to=="F") {
         if (history_idx<history_arr.length) {
-            f_obj = history_arr[history_idx][0];
-            f_idx = history_arr[history_idx][1];
             history_idx++;
-            //console.log("history_idx ++")
+            //console.log("history_idx ++");
         }else{
             history_idx=history_arr.length;
         }
     }
     if (change_to=="B") {
         if(history_idx >0){
-            f_obj = history_arr[history_idx][0];
-            f_idx = history_arr[history_idx][1];
             history_idx--;
-            //console.log("history_idx --")
+            //console.log("history_idx --");
         }else{
-            return;
+            history_idx=0;
         }
     }
     
     //console.log("history_arr: ", history_arr,"history_idx: " + history_idx,"f_obj.id: " + history_arr[history_idx][0].id);
-
+    f_obj = history_arr[history_idx][0];
+    f_idx = history_arr[history_idx][1];
+    history_arr[history_idx]=[f_obj,getImgIdx(f_obj.src)];
     //console.log(change_to+" clicked "+f_obj.id+" "+f_idx);
+    field[f_obj.xcoor][f_obj.ycoor]=f_idx;
     changeImgHist(f_obj, f_idx);
-    
+}
+function showNums(rows_arr,cols_arr) {
+    // show function on page
+}
+
+function getNums(num_arr) {
+    //count numbers of array correctly
+    var last=-1;
+    for (var index = 0;
+        index < num_arr.length; 
+        index++) {
+        //num_arr[index];
+    }
+}
+
+function countRow(idx){
+    row=field[idx];
+    return getNums(row);
+}
+
+function countCol(idx){
+    var col=[];
+    for (i = 0; i < i_height; i++) {
+        col= field[i][idx];
+    }
+    return getNums(col);
+}
+
+function saveState() {
+    rowsNums=[];
+    colsNums=[];
+    for (num = 0; num < i_height; num++) {
+        rowsNums.push(countRow(num));
+    }
+    for (num = 0; num < i_height; num++) {
+        colsNums.push(countCol(num));
+    }
+    showNums(rowsNums,colsNums);
+
 }
 
 menu = document.getElementById("menu");
@@ -170,3 +214,8 @@ menu.appendChild(btn_front);
 btn_back.addEventListener("click", historyChange.bind(null,"B"));
 
 btn_front.addEventListener("click", historyChange.bind(null,"F"));
+
+btn_eval = new Image();
+btn_eval.src = "ng_save.png";
+btn_eval.addEventListener("click",saveState);
+menu.appendChild(btn_eval);
