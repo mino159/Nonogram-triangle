@@ -1,5 +1,5 @@
 //image width and height
-const i_width = 8;
+const i_width = 5;
 const i_height = 5;
 
 let field=[]
@@ -8,6 +8,12 @@ const container = document.querySelector('.container');
 // history object
 let history_arr = [];
 let history_idx=0;
+
+/*
+
+creating images and field
+
+*/
 
 function createImgs(w, h) {
     /*Function create whole field and retur all img objects*/
@@ -59,6 +65,12 @@ function addStyling(img){
 
 }
 
+/*
+
+Handling game functions
+
+*/
+
 function getImgIdx(str_img_src) {
     /* helper function to get image index*/
     return parseInt(str_img_src.slice(-5, -4));
@@ -102,11 +114,11 @@ function changeImgHist(object_img,idx) {
     return;
 }
 
-
 function createSelectors() {
     selector_cont = document.querySelector(".selector");
     for (var i = 0; i <= 7; i++) {
         new_sel=new Image();
+        new_sel.id = i;
         new_sel.src="ng_"+i+".png";
         new_sel.addEventListener("click",selectorClicked);
 
@@ -119,17 +131,12 @@ function createSelectors() {
     
     return document.querySelectorAll(".selector img");
 }
+
 function selectorClicked() {
     selected = document.querySelector(".selected");
     selected.classList.remove("selected");
     this.classList.add("selected");
 }
-// createImgs and store them
-const imgs = createImgs(i_width, i_height);
-
-
-const selectors = createSelectors();
-
 
 function historyChange(change_to){
     if (history_arr.length<1) {
@@ -160,26 +167,40 @@ function historyChange(change_to){
     field[f_obj.xcoor][f_obj.ycoor]=f_idx;
     changeImgHist(f_obj, f_idx);
 }
-function showNums(rows_arr,cols_arr) {
-    // show function on page
+
+function addHorNums(numHor) {
+    for (character in numHor) {
+        img = new Image
+        //TODO
+    }
+}
+
+function showNums(numHor,numVer) {
+    addHorNums(numHor)
+    addVerNums(numVer)
 }
 
 function getNums(num_arr) {
     //count numbers of array correctly
-    var last=-1;
-    for (var index = 0;
-        index < num_arr.length; 
-        index++) {
-        //num_arr[index];
+    //num_arr = [ 0, 3, 1, 2, 0 ]
+    //return = "/3\"
+    to_return=""
+    for (let i = 0; i < num_arr.length; i++) {
+        num = num_arr[i];
+        if (num!==0) {
+            //TODO
+        }
+
+        
     }
 }
 
-function countRow(idx){
+function getRow(idx){
     row=field[idx];
     return getNums(row);
 }
 
-function countCol(idx){
+function getCol(idx){
     var col=[];
     for (i = 0; i < i_height; i++) {
         col= field[i][idx];
@@ -187,19 +208,23 @@ function countCol(idx){
     return getNums(col);
 }
 
+
 function saveState() {
-    rowsNums=[];
-    colsNums=[];
+    var numHor = "";
+    var numVer = "";
+
     for (num = 0; num < i_height; num++) {
-        rowsNums.push(countRow(num));
+        numHor += getRow(num)+",";
+    };
+    for (num = 0; num < i_width; num++) {
+        numVer += getCol(num)+",";
     }
-    for (num = 0; num < i_height; num++) {
-        colsNums.push(countCol(num));
-    }
-    showNums(rowsNums,colsNums);
+
+    showNums(numHor,numVer);
 
 }
 
+function createMenu(){
 menu = document.getElementById("menu");
 
 btn_back = new Image();
@@ -215,7 +240,22 @@ btn_back.addEventListener("click", historyChange.bind(null,"B"));
 
 btn_front.addEventListener("click", historyChange.bind(null,"F"));
 
-btn_eval = new Image();
-btn_eval.src = "ng_save.png";
-btn_eval.addEventListener("click",saveState);
-menu.appendChild(btn_eval);
+btn_save = new Image();
+btn_save.src = "ng_save.png";
+btn_save.addEventListener("click",saveState);
+menu.appendChild(btn_save);
+}
+
+// createImgs and store them
+
+const imgs = createImgs(i_width, i_height);
+
+
+const selectors = createSelectors();
+
+createMenu();
+
+var numHor = "/3\,/1||1||1\,|2||2|,\1||1||1/,\3/";
+var numVer = "/3\,/1||1||1\,|2||2|,\1||1||1/,\3/";
+
+showNums(numHor, numVer);
