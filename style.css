@@ -1,3 +1,11 @@
+img{
+    height: 100vw;
+    max-height: 30px;
+}
+
+.newline{
+    display: block;
+}
 .row {
     display: block;
     flex-direction: column;
@@ -5,14 +13,16 @@
 
 .container{
     display: flex;
-    font-size: 0;
     align-items: center;
     flex-direction: column;
 }
-img{
-    
-    width: 9vw;
-    max-width: 30px;
+.container div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 30px;
+    font-size: larger;
 }
 
 .selector, #menu {
@@ -27,22 +37,22 @@ img{
 }
 
 .selected{
-    outline: 2px solid red;
+    outline: 5px solid rgb(0, 89, 255);
 }
 
 .y5 {
-    /* margin-right: 2px; */
-    border-right: 2px solid black;
+    /* margin-right: 3px; */
+    border-right: 3px solid black;
 }
 
 .x5 {
-    border-bottom: 2px solid black;
+    border-bottom: 3px solid black;
 }
 
 .y0 {
-    border-left: 2px solid black;
+    border-left: 3px solid black;
 }
 
 .x0 {
-    border-top: 2px solid black;
+    border-top: 3px solid black;
 }
