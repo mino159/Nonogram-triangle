@@ -1,3 +1,6 @@
+body{
+    size: 20%;
+}
 img{
     height: 100vw;
     max-height: 30px;
